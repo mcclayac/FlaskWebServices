@@ -40,8 +40,63 @@ curl -iX PATCH -H "Content-Type: application/json" -d '{"printed_once":"true", "
 http DELETE :5000/api/messages/2
 curl -iX DELETE :5000/api/messages/2
 
+---------------------------------------------------
+pip install Flask-SQLAlchemy
+
+pip install Flask-Migrate
+
+pip install marshmallow
+
+pip install marshmallow-sqlalchemy
+
+pip install Flask-Marshmallow
+
+pip install psycopg2
 
 
+
+
+
+
+
+python migrate.py db init
+
+python migrate.py db migrate
+
+
+(Flask01) Anthonys-MacBook-Pro:api anthonymcclay$ python migrate.py db migrate
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.autogenerate.compare] Detected added table 'category'
+INFO  [alembic.autogenerate.compare] Detected added table 'message'
+  Generating /mcclayac/pythoncode/FlaskWebServices/api/migrations/versions/47d99ed2db40_.py ... done
+
+
+CREATE ROLE messges_user WITH LOGIN PASSWORD '11javajava';
+GRANT ALL PRIVILEGES ON DATABASE messages TO messges_user;
+ALTER USER messges_user CREATEDB;
+
+
+psql --username=messges_user --dbname=messages --command="\dt"
+
+
+python run.py
+
+
+http POST :5000/api/categories/ name='Information'
+http POST :5000/api/categories/ name='Warning'
+
+curl -iX POST -H "Content-Type: application/json" -d '{"name":"Information"}' :5000/api/categories/
+curl -iX POST -H "Content-Type: application/json" -d '{"name":"Warning"}' :5000/api/categories/
+
+
+
+
+http POST :5000/api/messages/ message='Checking temperature sensor' duration=5 category="Information"
+http POST :5000/api/messages/ message='Checking light sensor' duration=8 category="Information"
+
+http :5000/api/categories/1
+curl -iX GET :5000/api/categories/1
 
 
 
